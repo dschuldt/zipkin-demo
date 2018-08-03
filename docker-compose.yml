@@ -1,0 +1,23 @@
+version: "3"
+services:
+  hello-service:
+    image: dschuldt/hello-service:latest
+    container_name: hello-service
+    ports:
+      - 8080:8080
+    depends_on:
+      - zipkin
+  world-service:
+    image: dschuldt/world-service
+    container_name: world-service
+    ports:
+      - 8080
+    depends_on:
+      - zipkin
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    environment:
+      - STORAGE_TYPE=mem
+    ports:
+      - 9411:9411
